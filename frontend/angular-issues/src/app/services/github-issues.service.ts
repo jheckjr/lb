@@ -16,7 +16,7 @@ export class GithubIssuesService {
 
   constructor(private http: Http) { }
 
-  private getIssuesFromRepo(owner: string, repo: string): Observable<Issue[]> {
+  getIssuesFromRepo(owner: string, repo: string): Observable<Issue[]> {
     let sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
     let url = `${this.BASE_URL}/${owner}/${repo}/${this.ISSUES_PER_PAGE_100}&${this.SINCE_QUERY}${sevenDaysAgo.toISOString()}&${this.PAGE_QUERY}`;
@@ -34,18 +34,20 @@ export class GithubIssuesService {
           } else {
             pageNum = 0;
           }
+          console.log('Call response' + pageNum);
           return {
             pageNum: pageNum,
             issues: (<any>res.json()).map(issue => {
               return {
-                title: issue.title,
-                body: issue.body,
-                user_login: issue.user.login,
-                assignee_login: issue.assignee.login
+                title: issue.title || '',
+                body: issue.body || '',
+                user_login: issue.user && issue.user.login || '',
+                assignee_login: issue.assignee && issue.assignee.login || ''
               };
             })
           };
         } else {
+          console.log('Error response');
           return {
             pageNum: 0,
             issues: []
@@ -53,6 +55,7 @@ export class GithubIssuesService {
         }
       })
       .concatMap((data) => {
+        console.log(data.pageNum);
         if (data.pageNum > 0) {
           return this.callRepository(pageNum, baseUrl)
             .map((results) => [...data.issues, ...results]);

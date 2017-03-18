@@ -1,3 +1,7 @@
 <h1>
   {{title}}
 </h1>
+<div>
+  <app-issue-row *ngFor="let issue of issues"
+      [issue]="issue"></app-issue-row>
+</div>

@@ -6,7 +6,7 @@ import { Http, ConnectionBackend, BaseRequestOptions, Response,
   ResponseOptions, Headers } from '@angular/http';
 
 import { GithubIssuesService } from './github-issues.service';
-import { TEST_BODY, TEST_ISSUE } from './test-helper-github-issues';
+import { TEST_BODY, TEST_ISSUE } from '../test';
 import { Issue } from '../models';
 
 describe('GithubIssuesService', () => {

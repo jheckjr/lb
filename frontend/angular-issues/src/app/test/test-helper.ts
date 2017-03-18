@@ -1,3 +1,6 @@
+import { Observable } from 'rxjs';
+import { Issue } from '../models';
+
 export const TEST_BODY = `
 [
 {
@@ -174,3 +177,10 @@ export const TEST_ISSUE = {
   user_login: "octocat",
   assignee_login: "octocat"
 };
+
+export const TEST_OBSERVABLE = new Observable<Issue[]>(observer => {
+  observer.next([
+    TEST_ISSUE
+  ]);
+  observer.complete();
+});

@@ -1,0 +1,12 @@
+<div class="title">
+  {{issue.title}}
+</div>
+<div class="body"
+    [innerHTML]="parsedBody">
+</div>
+<div class="user">
+  Opened by {{issue.user_login}}
+</div>
+<div class="user">
+  Assigned to {{issue.assignee_login || "no one"}}
+</div>

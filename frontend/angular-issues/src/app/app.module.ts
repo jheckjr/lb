@@ -4,18 +4,20 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { GithubIssuesService } from './services/github-issues.service';
+import { IssueRowComponent } from './issue-row/issue-row.component';
+import { GithubIssuesService, MarkdownService } from './services';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    IssueRowComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [GithubIssuesService],
+  providers: [GithubIssuesService, MarkdownService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
