@@ -167,3 +167,10 @@ export const TEST_BODY = `
 }
 ]
 `;
+
+export const TEST_ISSUE = {
+  title: 'Found a bug',
+  body: "I'm having a problem with this.",
+  user_login: "octocat",
+  assignee_login: "octocat"
+};
