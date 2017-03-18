@@ -1,0 +1,25 @@
+div.title {
+  font-weight: 700;
+  color: #24292e;
+  padding: 8px 10px 5px 10px;
+  border-top: 1px solid #e1e4e8;
+}
+
+a:hover {
+  color: #0366d6;
+  cursor: pointer;
+}
+
+div.content {
+  padding: 0 10px 5px 10px;
+  padding-bottom: 5px;
+  font-size: 0.75rem;
+}
+
+div.body {
+  padding: 0 10px
+}
+
+div.users {
+  font-weight: 300;
+}

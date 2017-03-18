@@ -1,12 +1,13 @@
 <div class="title">
-  {{issue.title}}
+  <a (click)="opened=!opened">
+    {{issue.title}} </a>
 </div>
-<div class="body"
-    [innerHTML]="parsedBody">
-</div>
-<div class="user">
-  Opened by {{issue.user_login}}
-</div>
-<div class="user">
-  Assigned to {{issue.assignee_login || "no one"}}
+<div class="content">
+  <div class="body"
+      *ngIf="opened"
+      [innerHTML]="issue.body">
+  </div>
+  <div class="users">
+    Opened by {{issue.user_login}} | Assigned to {{issue.assignee_login}}
+  </div>
 </div>

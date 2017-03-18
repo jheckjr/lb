@@ -31,13 +31,11 @@ describe('IssueRowComponent', () => {
   it('should show the issue data', () => {
     let titleEl = fixture.debugElement.query(By.css('.title')).nativeElement;
     let bodyEl = fixture.debugElement.query(By.css('.body')).nativeElement;
-    let users = fixture.debugElement.queryAll(By.css('.user'));
-    let userEl = users[0].nativeElement;
-    let assigneeEl = users[1].nativeElement;
+    let usersEl = fixture.debugElement.query(By.css('.users')).nativeElement;
 
     expect(titleEl.textContent).toContain(TEST_ISSUE.title);
     expect(bodyEl.textContent).toContain(TEST_ISSUE.body);
-    expect(userEl.textContent).toContain(TEST_ISSUE.user_login);
-    expect(assigneeEl.textContent).toContain(TEST_ISSUE.assignee_login);
+    expect(usersEl.textContent).toContain(TEST_ISSUE.user_login);
+    expect(usersEl.textContent).toContain(TEST_ISSUE.assignee_login);
   });
 });
