@@ -10,12 +10,13 @@ import { MarkdownService } from '../services';
 })
 export class IssueRowComponent implements OnInit {
   @Input() issue: Issue;
+  parsedBody: string;
   opened: boolean;
 
   constructor(private mdService: MarkdownService) { }
 
   ngOnInit() {
-    this.issue.body = this.mdService.parse(this.issue.body);
+    this.parsedBody = this.mdService.parse(this.issue.body);
     this.issue.user_login = this.issue.user_login || 'no one';
     this.issue.assignee_login = this.issue.assignee_login || 'no one';
     this.opened = false;

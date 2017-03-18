@@ -5,7 +5,7 @@
 <div class="content">
   <div class="body"
       *ngIf="opened"
-      [innerHTML]="issue.body">
+      [innerHTML]="parsedBody">
   </div>
   <div class="users">
     Opened by {{issue.user_login}} | Assigned to {{issue.assignee_login}}

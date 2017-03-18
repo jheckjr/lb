@@ -34,7 +34,6 @@ export class GithubIssuesService {
           } else {
             pageNum = 0;
           }
-          console.log('Call response' + pageNum);
           return {
             pageNum: pageNum,
             issues: (<any>res.json()).map(issue => {
@@ -47,7 +46,6 @@ export class GithubIssuesService {
             })
           };
         } else {
-          console.log('Error response');
           return {
             pageNum: 0,
             issues: []
@@ -55,7 +53,6 @@ export class GithubIssuesService {
         }
       })
       .concatMap((data) => {
-        console.log(data.pageNum);
         if (data.pageNum > 0) {
           return this.callRepository(pageNum, baseUrl)
             .map((results) => [...data.issues, ...results]);

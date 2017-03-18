@@ -94,13 +94,4 @@ describe('GithubIssuesService', () => {
       tick();
       expect(issues).toEqual([]);
     })));
-
-  //it('should ')
-  /*
-  [obj1, obj2,...]
-  Title "obj.title"
-  Body "obj.body"
-  User Login "obj.user.login"
-  Assignee Login "obj.assignee.login"
-  */
 });

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 
 import { AppComponent } from './app.component';
 import { IssueRowComponent } from './issue-row/issue-row.component';
-import { GithubIssuesService } from './services';
+import { GithubIssuesService, MarkdownService } from './services';
 import { TEST_OBSERVABLE } from './test';
 
 describe('AppComponent', () => {
@@ -25,6 +25,7 @@ describe('AppComponent', () => {
         BaseRequestOptions,
         MockBackend,
         GithubIssuesService,
+        MarkdownService,
         {
           provide: Http,
           useFactory: (backend: ConnectionBackend,
@@ -53,10 +54,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('Angular Issues from Github');
   }));
 
-  it('should render title in a h1 tag', async(() => {
+  it('should render title in a h2 tag', async(() => {
     fixture.detectChanges();
     let compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Angular Issues from Github');
+    expect(compiled.querySelector('h2').textContent).toContain('Angular Issues from Github');
   }));
 
   it('should display a list of issues', async(() => {
