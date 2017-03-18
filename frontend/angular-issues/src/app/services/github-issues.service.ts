@@ -9,71 +9,23 @@ import { Issue } from '../models';
 
 @Injectable()
 export class GithubIssuesService {
-  private BASE_URL = 'https://api.github.com/repos/';
+  private BASE_URL = 'https://api.github.com/repos';
   private ISSUES_PER_PAGE_100 = 'issues?per_page=100';
-  private hasNext = false;
-  //YYYY-MM-DDTHH:MM:SSZ (iso 8601)
+  private PAGE_QUERY = 'page=';
+  private SINCE_QUERY = 'since=';
 
   constructor(private http: Http) { }
 
-  private getIssuesFromRepo(): Observable<Issue[]> {
-    let url = this.BASE_URL + 'angular/angular/' + this.ISSUES_PER_PAGE_100;
-    this.hasNext = true;
-    let pageNum = 2;
-
-    let observable = this.http.get(url).map((res: Response) => {
-      if (res.ok) {
-        let link = res.headers.get('Link');
-        if (!link || link.indexOf("rel=\"next\"") === -1) {
-          this.hasNext = false;
-        }
-
-        return (<any>res.json()).map(issue => {
-          return {
-            title: issue.title,
-            body: issue.body,
-            user_login: issue.user.login,
-            assignee_login: issue.assignee.login
-          };
-        });
-      } else {
-        this.hasNext = false;
-        return [];
-      }
-    });
-
-    observable.subscribe((res) => {
-      while (this.hasNext) {
-        url += `&page=${pageNum}`;
-        observable.concat(this.http.get(url).map((res: Response) => {
-          if (res.ok) {
-            let link = res.headers.get('Link');
-            if (!link || link.indexOf("rel=\"next\"") === -1) {
-              this.hasNext = false;
-            }
-
-            return (<any>res.json()).map(issue => {
-              return {
-                title: issue.title,
-                body: issue.body,
-                user_login: issue.user.login,
-                assignee_login: issue.assignee.login
-              };
-            });
-          } else {
-            this.hasNext = false;
-            return [];
-          }
-        }));
-        pageNum++;
-      }
-    });
-
-    return observable;
+  private getIssuesFromRepo(owner: string, repo: string): Observable<Issue[]> {
+    let sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    let url = `${this.BASE_URL}/${owner}/${repo}/${this.ISSUES_PER_PAGE_100}&${this.SINCE_QUERY}${sevenDaysAgo.toISOString()}&${this.PAGE_QUERY}`;
+    return this.callRepository(1, url);
   }
 
-  private callRepository(pageNum: number): Observable<Issue[]> {
-    return this.http.get('url')
+  private callRepository(pageNum: number, baseUrl: string): Observable<Issue[]> {
+    let url = baseUrl + String(pageNum);
+    return this.http.get(url)
       .map((res: Response) => {
         if (res.ok) {
           let link = res.headers.get('Link');
@@ -102,7 +54,7 @@ export class GithubIssuesService {
       })
       .concatMap((data) => {
         if (data.pageNum > 0) {
-          return this.callRepository(pageNum)
+          return this.callRepository(pageNum, baseUrl)
             .map((results) => [...data.issues, ...results]);
         } else {
           return Observable.of(data.issues);
@@ -110,10 +62,3 @@ export class GithubIssuesService {
       });
   }
 }
-/*
-[obj1, obj2,...]
-Title "obj.title"
-Body "obj.body"
-User Login "obj.user.login"
-Assignee Login "obj.assignee.login"
-*/

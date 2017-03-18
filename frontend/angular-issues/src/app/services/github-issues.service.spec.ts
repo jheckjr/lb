@@ -30,8 +30,11 @@ describe('GithubIssuesService', () => {
   it('should get a list of issues for a repository with one page',
     inject([GithubIssuesService, MockBackend], fakeAsync((svc, backend) => {
       let issues: Issue[];
+      let sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
       backend.connections.subscribe(c => {
-        expect(c.request.url).toBe('https://api.github.com/repos/angular/angular/issues?per_page=100');
+        expect(c.request.url.slice(0, 71)).toBe('https://api.github.com/repos/angular/angular/issues?per_page=100&since=');
+        expect(c.request.url.slice(-7)).toBe('&page=1');
         let resp = new ResponseOptions({
           headers: new Headers({}),
           status: 200,
@@ -40,7 +43,7 @@ describe('GithubIssuesService', () => {
         c.mockRespond(new Response(resp));
       });
 
-      svc.getIssuesFromRepo().subscribe((res) => {
+      svc.getIssuesFromRepo('angular', 'angular').subscribe((res) => {
         issues = res;
       });
       tick();
@@ -65,7 +68,7 @@ describe('GithubIssuesService', () => {
         c.mockRespond(new Response(resp));
       });
 
-      svc.getIssuesFromRepo().subscribe((res) => {
+      svc.getIssuesFromRepo('angular', 'angular').subscribe((res) => {
         issues = res;
       });
       tick();
@@ -85,7 +88,7 @@ describe('GithubIssuesService', () => {
         c.mockRespond(new Response(resp));
       });
 
-      svc.getIssuesFromRepo().subscribe((res) => {
+      svc.getIssuesFromRepo('angular', 'angular').subscribe((res) => {
         issues = res;
       });
       tick();
