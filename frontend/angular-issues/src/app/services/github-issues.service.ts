@@ -29,7 +29,7 @@ export class GithubIssuesService {
       .map((res: Response) => {
         if (res.ok) {
           let link = res.headers.get('Link');
-          if (link && link.indexOf("rel=\"next\"") !== -1) {
+          if (link && link.indexOf('rel=\"next\"') !== -1) {
             pageNum++;
           } else {
             pageNum = 0;

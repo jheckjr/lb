@@ -55,8 +55,8 @@ describe('GithubIssuesService', () => {
     inject([GithubIssuesService, MockBackend], fakeAsync((svc, backend) => {
       let issues: Issue[];
       let linkHeaders = [];
-      linkHeaders.push({ 'Link': "<https://api.github.com/repositories/24195339/issues?since=2017-03-11T100900Z&per_page=100>; rel=\"next\"," });
-      linkHeaders.push({ 'Link': "<https://api.github.com/repositories/24195339/issues?since=2017-03-11T100900Z&per_page=100>; rel=\"prev\"," });
+      linkHeaders.push({ 'Link': '<https://api.github.com/repositories/24195339/issues?since=2017-03-11T100900Z&per_page=100>; rel=\"next\",' });
+      linkHeaders.push({ 'Link': '<https://api.github.com/repositories/24195339/issues?since=2017-03-11T100900Z&per_page=100>; rel=\"prev\",' });
 
       backend.connections.subscribe(c => {
         let linkHeader = linkHeaders.shift();
@@ -79,7 +79,7 @@ describe('GithubIssuesService', () => {
 
   it('should work with a bad request',
     inject([GithubIssuesService, MockBackend], fakeAsync((svc, backend) => {
-      var issues;
+      let issues;
       backend.connections.subscribe(c => {
         let resp = new ResponseOptions({
           status: 404,

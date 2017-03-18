@@ -39,7 +39,7 @@ describe('IssueRowComponent', () => {
 
     bodyEl = fixture.debugElement.query(By.css('.body')).nativeElement;
     expect(bodyEl).toBeTruthy();
-  })
+  });
 
   it('should show the issue data', () => {
     component.opened = true;
