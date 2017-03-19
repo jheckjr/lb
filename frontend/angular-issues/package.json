@@ -5,7 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "start": "node server.js",
-    "lint": "tslint \"src/**/*.ts\"",
+    "lint": "tslint --force \"src/**/*.ts\"",
     "test": "ng test --browsers PhantomJS",
     "pree2e": "webdriver-manager update",
     "e2e": "protractor",
